@@ -18,8 +18,11 @@ def contact(request):
     return render(request, 'catalog/contact.html')  # Отображение страницы контактов
 
 
-def get_product(request, pk):
+def get_product(request):
     context = {
-        'object': Product.objects.get(pk=pk),
+        'object_list': Product.objects.all(),
     }
     return render(request, 'catalog/product.html', context)
+
+def get_base(request):
+    return render(request, 'catalog/base.html')
