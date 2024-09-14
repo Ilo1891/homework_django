@@ -1,7 +1,9 @@
-from django.core.management import BaseCommand
-from catalog.models import Category, Product
 import json
 from pathlib import Path
+
+from django.core.management import BaseCommand
+
+from catalog.models import Category, Product
 
 
 class Command(BaseCommand):
