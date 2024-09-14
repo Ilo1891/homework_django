@@ -21,8 +21,10 @@ def contact(request):
     return render(request, 'catalog/contact.html')  # Отображение страницы контактов
 
 
-def get_product(request):
+def get_product(request, pk):
     context = {
-        'object_list': Product.objects.all(),
+        'object': Product.objects.get(pk=pk),
     }
     return render(request, 'catalog/product.html', context)
+
+

@@ -5,7 +5,7 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('catalog.urls')),  # Подключение к URL'ам приложения catalog
+    path('', include('catalog.urls', namespace="catalog")),  # Подключение к URL'ам приложения catalog
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

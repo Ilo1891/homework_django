@@ -16,7 +16,8 @@
                     <li>Цена {{object.price}}</li>
                     <img class="card-img-top" src="{{ object.image| my_media_filter }}">
                 </ul>
-                <button type="button" class="btn btn-danger">Купить</button>
+                <a href="{% url 'catalog:product' object.pk %}" type="button"
+                   class="btn btn-danger">Купить</a>
             </div>
         </div>
     </div>
