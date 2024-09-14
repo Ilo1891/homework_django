@@ -1,5 +1,5 @@
 from django.urls import path
-from catalog.views import home, contact, get_product, get_base
+from catalog.views import home, contact, get_product
 
 urlpatterns = [
     path('', home, name='home'),  # Главная страница
