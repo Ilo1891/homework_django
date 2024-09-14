@@ -10,7 +10,7 @@ class Command(BaseCommand):
 
     @staticmethod
     def json_read_categories(path):
-        with open(path, 'r') as file:
+        with open(path, "r") as file:
             data = json.load(fp=file)
         categories = []
         for model in data:
@@ -20,7 +20,7 @@ class Command(BaseCommand):
 
     @staticmethod
     def json_read_products(path):
-        with open(path, 'r') as file:
+        with open(path, "r") as file:
             data = json.load(fp=file)
         products = []
         for model in data:
@@ -41,8 +41,10 @@ class Command(BaseCommand):
         # Обходим все значения категорий из фиктсуры для получения информации об одном объекте
         for category in Command.json_read_categories(fixture_path):
             category_for_create.append(
-                Category(name=category['fields']['name'],
-                         description=category['fields']['description'])
+                Category(
+                    name=category["fields"]["name"],
+                    description=category["fields"]["description"],
+                )
             )
 
         # Создаем объекты в базе с помощью метода bulk_create()
@@ -51,15 +53,16 @@ class Command(BaseCommand):
         # Обходим все значения продуктов из фиктсуры для получения информации об одном объекте
         for product in Command.json_read_products(fixture_path):
             product_for_create.append(
-                Product(name=product['fields']['name'],
-                        description=product['fields']['description'],
-                        image=product['fields']['image'],
-                        # получаем категорию из базы данных для корректной связки объектов
-                        category=Category.objects.get(pk=product['fields']['category']),
-                        price=product['fields']['price'],
-                        created_at=product['fields']['created_at'],
-                        updated_at=product['fields']['updated_at'],
-                        )
+                Product(
+                    name=product["fields"]["name"],
+                    description=product["fields"]["description"],
+                    image=product["fields"]["image"],
+                    # получаем категорию из базы данных для корректной связки объектов
+                    category=Category.objects.get(pk=product["fields"]["category"]),
+                    price=product["fields"]["price"],
+                    created_at=product["fields"]["created_at"],
+                    updated_at=product["fields"]["updated_at"],
+                )
             )
 
             # Создаем объекты в базе с помощью метода bulk_create()

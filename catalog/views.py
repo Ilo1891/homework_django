@@ -11,6 +11,7 @@ from catalog.models import Product
 #     }
 #     return render(request, 'catalog/home.html', context)  # Отображение главной страницы
 
+
 class ProductListView(ListView):
     model = Product
 
@@ -25,9 +26,10 @@ class ProductListView(ListView):
 #         return redirect('home')  # После отправки направляем на главную страницу
 #     return render(request, 'catalog/contact.html')  # Отображение страницы контактов
 
+
 class ContactTemplateView(TemplateView):
-    template_name = 'catalog/contact.html'
-    extra_context = {'title': 'Контакты'}
+    template_name = "catalog/contact.html"
+    extra_context = {"title": "Контакты"}
 
 
 # def get_product(request, pk):
@@ -35,6 +37,7 @@ class ContactTemplateView(TemplateView):
 #         'object': Product.objects.get(pk=pk),
 #     }
 #     return render(request, 'catalog/product.html', context)
+
 
 class ProductDetailView(DetailView):
     model = Product

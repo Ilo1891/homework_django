@@ -6,8 +6,8 @@ class Category(models.Model):
     description = models.CharField(max_length=64, verbose_name="description")
 
     class Meta:
-        verbose_name_plural = 'Categories'
-        verbose_name = 'Categy'
+        verbose_name_plural = "Categories"
+        verbose_name = "Categy"
 
     def __str__(self):
         return self.name
@@ -22,11 +22,13 @@ class Product(models.Model):
     update_at = models.DateField(verbose_name="updated", auto_now=True)
     manufactured_at = models.DateField(verbose_name="manufactured", auto_now_add=True)
 
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name="category")
+    category = models.ForeignKey(
+        Category, on_delete=models.CASCADE, verbose_name="category"
+    )
 
     class Meta:
-        verbose_name_plural = 'Products'
-        verbose_name = 'Product'
+        verbose_name_plural = "Products"
+        verbose_name = "Product"
 
     def __str__(self):
         return self.name
