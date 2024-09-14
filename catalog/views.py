@@ -4,7 +4,10 @@ from catalog.models import Product
 
 
 def home(request):
-    return render(request, 'catalog/home.html')  # Отображение главной страницы
+    context = {
+        'object_list': Product.objects.all(),
+    }
+    return render(request, 'catalog/home.html', context)  # Отображение главной страницы
 
 
 def contact(request):
@@ -23,6 +26,3 @@ def get_product(request):
         'object_list': Product.objects.all(),
     }
     return render(request, 'catalog/product.html', context)
-
-def get_base(request):
-    return render(request, 'catalog/base.html')
