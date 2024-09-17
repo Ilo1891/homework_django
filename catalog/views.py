@@ -41,3 +41,5 @@ class ContactTemplateView(TemplateView):
 
 class ProductDetailView(DetailView):
     model = Product
+
+
