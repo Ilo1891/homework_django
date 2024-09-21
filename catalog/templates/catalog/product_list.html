@@ -2,7 +2,8 @@
 {% extends 'catalog/base.html' %}
 {% block content %}
 {% load my_tags %}
-
+<a href="{% url 'catalog:product_create' %}" type="button"
+   class="btn btn-warning">Создать Продукт</a>
 {% for object in object_list %}
 <div class="col-3">
     <div class="card mb-4 box-shadow">
@@ -14,10 +15,15 @@
                 <ul class="list-unstyled mt-3 mb-4 text-start m-3">
                     <li>{{object.description|truncatewords:100}}</li>
                     <li>Цена {{object.price}}</li>
+                    <li>Версия продукта {{object.productversion_set.version}}</li>
                     <img class="card-img-top" src="{{ object.image| my_media_filter }}">
                 </ul>
                 <a href="{% url 'catalog:product' object.pk %}" type="button"
                    class="btn btn-danger">Купить</a>
+                <a href="{% url 'catalog:product_update' object.pk %}" type="button"
+                   class="btn btn-secondary">Редактировать</a>
+                <a href="{% url 'catalog:product_delete' object.pk %}" type="button"
+                   class="btn btn-secondary">Удалить</a>
             </div>
         </div>
     </div>

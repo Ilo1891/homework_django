@@ -1,8 +1,10 @@
 from django.contrib import messages
 from django.shortcuts import redirect, render
-from django.views.generic import DetailView, ListView, TemplateView
+from django.views.generic import DetailView, ListView, TemplateView, UpdateView, CreateView, DeleteView
+from django.urls import reverse_lazy, reverse
 
-from catalog.models import Product
+from catalog.forms import ProductForm
+from catalog.models import Product, Category, ProductVersion
 
 
 # def home(request):
@@ -14,6 +16,16 @@ from catalog.models import Product
 
 class ProductListView(ListView):
     model = Product
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        products = self.get_queryset()
+        print(products)
+        return context
 
 
 # def contact(request):
@@ -43,3 +55,21 @@ class ProductDetailView(DetailView):
     model = Product
 
 
+class ProductUpdateView(UpdateView):
+    model = Product
+    form_class = ProductForm
+
+    def get_success_url(self):
+        return reverse('catalog:product', args=[self.object.pk])
+
+
+class ProductCreateView(CreateView):
+    model = Product
+    form_class = ProductForm
+    success_url = reverse_lazy('catalog:home')
+
+
+
+class ProductDeleteView(DeleteView):
+    model = Product
+    success_url = reverse_lazy('catalog:home')
