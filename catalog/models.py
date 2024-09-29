@@ -1,5 +1,8 @@
 from django.db import models
 
+from blog.models import NULLABLE
+from config import settings
+
 
 class Category(models.Model):
     name = models.CharField(max_length=64, verbose_name="name")
@@ -25,6 +28,9 @@ class Product(models.Model):
     category = models.ForeignKey(
         Category, on_delete=models.CASCADE, verbose_name="category"
     )
+
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, **NULLABLE, verbose_name='владелец')
+
 
     class Meta:
         verbose_name_plural = "Products"

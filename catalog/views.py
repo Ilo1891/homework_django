@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.shortcuts import redirect, render
 from django.views.generic import DetailView, ListView, TemplateView, UpdateView, CreateView, DeleteView
 from django.urls import reverse_lazy, reverse
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from catalog.forms import ProductForm
 from catalog.models import Product, Category, ProductVersion
@@ -14,7 +15,8 @@ from catalog.models import Product, Category, ProductVersion
 #     return render(request, 'catalog/home.html', context)  # Отображение главной страницы
 
 
-class ProductListView(ListView):
+class ProductListView(LoginRequiredMixin, ListView):
+    login_url = reverse_lazy('users:login')
     model = Product
 
     def get_queryset(self):
@@ -24,7 +26,6 @@ class ProductListView(ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         products = self.get_queryset()
-        print(products)
         return context
 
 
@@ -51,11 +52,13 @@ class ContactTemplateView(TemplateView):
 #     return render(request, 'catalog/product.html', context)
 
 
-class ProductDetailView(DetailView):
+class ProductDetailView(LoginRequiredMixin, DetailView):
+    login_url = reverse_lazy('users:login')
     model = Product
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
+    login_url = reverse_lazy('users:login')
     model = Product
     form_class = ProductForm
 
@@ -63,13 +66,20 @@ class ProductUpdateView(UpdateView):
         return reverse('catalog:product', args=[self.object.pk])
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
+    login_url = reverse_lazy('users:login')
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:home')
 
+    def form_valid(self, form):
+        product = form.save()
+        product.owner = self.request.user
+        product.save()
+        return super().form_valid(form)
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
+    login_url = reverse_lazy('users:login')
     model = Product
     success_url = reverse_lazy('catalog:home')
